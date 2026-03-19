@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const ai = new GoogleGenAI({ apiKey: (process.env.GEMINI_API_KEY as string) || "" });
 
 export async function askGolfCoach(prompt: string) {
   const model = "gemini-3-flash-preview";

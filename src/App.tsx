@@ -288,7 +288,14 @@ export default function App() {
   };
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatEndRef.current) {
+      const scrollOptions: ScrollIntoViewOptions = { behavior: 'smooth', block: 'nearest' };
+      try {
+        chatEndRef.current.scrollIntoView(scrollOptions);
+      } catch (e) {
+        chatEndRef.current.scrollIntoView();
+      }
+    }
   }, [chatHistory, isTyping]);
 
   return (
@@ -548,7 +555,7 @@ export default function App() {
         </div>
 
         {/* Right Column: AI Coach */}
-        <div className="lg:col-span-5 flex flex-col h-[calc(100vh-12rem)] min-h-[500px]">
+        <div className="lg:col-span-5 flex flex-col h-[500px] lg:h-[calc(100vh-12rem)] lg:sticky lg:top-24">
           <div className="flex-1 bg-white rounded-3xl shadow-sm border border-zinc-100 flex flex-col overflow-hidden">
             <div className="p-6 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/50">
               <div className="flex items-center gap-3">
