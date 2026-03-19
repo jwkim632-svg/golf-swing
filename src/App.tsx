@@ -305,11 +305,11 @@ export default function App() {
             <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-widest">Mechanism Analyzer</p>
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-widest">
+        <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs font-semibold uppercase tracking-widest overflow-x-auto scrollbar-hide">
           <span 
             onClick={() => setActiveTab('mechanics')}
             className={cn(
-              "cursor-pointer transition-colors",
+              "cursor-pointer transition-colors whitespace-nowrap",
               activeTab === 'mechanics' ? "text-emerald-600" : "text-zinc-400 hover:text-zinc-600"
             )}
           >
@@ -318,7 +318,7 @@ export default function App() {
           <span 
             onClick={() => setActiveTab('drills')}
             className={cn(
-              "cursor-pointer transition-colors",
+              "cursor-pointer transition-colors whitespace-nowrap",
               activeTab === 'drills' ? "text-emerald-600" : "text-zinc-400 hover:text-zinc-600"
             )}
           >
@@ -327,7 +327,7 @@ export default function App() {
           <span 
             onClick={() => setActiveTab('equipment')}
             className={cn(
-              "cursor-pointer transition-colors",
+              "cursor-pointer transition-colors whitespace-nowrap",
               activeTab === 'equipment' ? "text-emerald-600" : "text-zinc-400 hover:text-zinc-600"
             )}
           >
@@ -498,16 +498,51 @@ export default function App() {
           {/* Tips Section */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { title: 'Grip', icon: <Zap size={18} />, desc: 'Neutral, Strong, or Weak' },
-              { title: 'Tempo', icon: <RotateCcw size={18} />, desc: '3:1 Backswing to Downswing' },
-              { title: 'Release', icon: <Activity size={18} />, desc: 'Square face at impact' }
+              { 
+                title: 'Grip (그립)', 
+                icon: <Zap size={18} />, 
+                desc: '클럽과 몸의 유일한 연결점입니다.',
+                details: [
+                  '뉴트럴: 양손의 V자가 오른쪽 어깨를 향함',
+                  '스트롱: 훅 방지 및 비거리 향상에 유리',
+                  '압력: 새를 잡듯 부드럽게 (1~10 중 3-4 정도)'
+                ]
+              },
+              { 
+                title: 'Tempo (템포)', 
+                icon: <RotateCcw size={18} />, 
+                desc: '일관된 스윙의 핵심 리듬입니다.',
+                details: [
+                  '3:1 비율: 백스윙(3) 대 다운스윙(1)',
+                  '탑에서의 여유: 급격한 전환 방지',
+                  '일정한 호흡: 스윙 시작 전 내뱉는 호흡'
+                ]
+              },
+              { 
+                title: 'Release (릴리스)', 
+                icon: <Activity size={18} />, 
+                desc: '임팩트 시 에너지를 폭발시킵니다.',
+                details: [
+                  '스퀘어 페이스: 임팩트 시 클럽 면 정렬',
+                  '팔뚝 회전: 자연스러운 로테이션 유도',
+                  '익스텐션: 공을 타겟 쪽으로 던지는 느낌'
+                ]
+              }
             ].map((tip, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm hover:border-emerald-200 transition-colors cursor-pointer group">
+              <div key={i} className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm hover:border-emerald-200 transition-all cursor-default group">
                 <div className="w-10 h-10 bg-zinc-50 rounded-xl flex items-center justify-center text-zinc-400 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors mb-4">
                   {tip.icon}
                 </div>
-                <h4 className="font-bold text-zinc-900">{tip.title}</h4>
-                <p className="text-xs text-zinc-500 mt-1">{tip.desc}</p>
+                <h4 className="font-bold text-zinc-900 text-lg">{tip.title}</h4>
+                <p className="text-xs text-emerald-600 font-semibold mt-1 mb-3">{tip.desc}</p>
+                <ul className="space-y-2">
+                  {tip.details.map((detail, idx) => (
+                    <li key={idx} className="text-[11px] text-zinc-500 leading-tight flex items-start gap-2">
+                      <span className="w-1 h-1 rounded-full bg-zinc-300 mt-1.5 shrink-0" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </section>
