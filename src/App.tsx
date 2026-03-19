@@ -224,31 +224,30 @@ const SWING_PHASES: SwingPhase[] = [
 
 const PhaseIndicator = ({ activeIndex }: { activeIndex: number }) => {
   return (
-    <div className="flex justify-between w-full mb-8 px-4 overflow-x-auto pb-4 scrollbar-hide">
+    <div className="flex justify-center items-center w-full mb-10 px-2 gap-1 md:gap-2">
       {SWING_PHASES.map((phase, index) => (
         <div 
           key={phase.id} 
-          className="flex flex-col items-center min-w-[80px] relative"
+          className="flex flex-col items-center relative flex-1 max-w-[100px]"
         >
           <div 
             className={cn(
-              "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 z-10",
-              index <= activeIndex ? "bg-emerald-600 text-white" : "bg-zinc-200 text-zinc-500"
+              "w-7 h-7 md:w-9 md:h-9 rounded-full flex items-center justify-center text-[10px] md:text-xs font-bold transition-all duration-300 z-10",
+              index === activeIndex 
+                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200 scale-110 ring-4 ring-emerald-50" 
+                : "bg-zinc-100 text-zinc-400"
             )}
           >
             {index + 1}
           </div>
           <span className={cn(
-            "text-[10px] mt-2 font-medium uppercase tracking-wider whitespace-nowrap",
+            "text-[8px] md:text-[10px] mt-2 font-bold uppercase tracking-tighter md:tracking-wider whitespace-nowrap",
             index === activeIndex ? "text-emerald-600" : "text-zinc-400"
           )}>
             {phase.id}
           </span>
           {index < SWING_PHASES.length - 1 && (
-            <div className={cn(
-              "absolute top-4 left-[60%] w-full h-[2px] -z-0",
-              index < activeIndex ? "bg-emerald-600" : "bg-zinc-200"
-            )} />
+            <div className="absolute top-3.5 md:top-4.5 left-[50%] w-full h-[1px] md:h-[2px] -z-0 bg-zinc-100" />
           )}
         </div>
       ))}
@@ -349,18 +348,18 @@ export default function App() {
                 exit={{ opacity: 0, x: 20 }}
                 className="bg-white rounded-3xl p-8 shadow-sm border border-zinc-100"
               >
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col items-center text-center mb-8">
                   <h2 className="text-2xl font-bold tracking-tight">Swing Sequence</h2>
-                  <div className="flex gap-2">
+                  <div className="flex gap-4 mt-4">
                     <button 
                       onClick={prevPhase}
-                      className="p-2 rounded-full hover:bg-zinc-100 transition-colors text-zinc-400 hover:text-zinc-900"
+                      className="p-2 rounded-full bg-zinc-50 hover:bg-zinc-100 transition-colors text-zinc-400 hover:text-zinc-900 border border-zinc-100"
                     >
                       <ChevronLeft size={24} />
                     </button>
                     <button 
                       onClick={nextPhase}
-                      className="p-2 rounded-full hover:bg-zinc-100 transition-colors text-zinc-400 hover:text-zinc-900"
+                      className="p-2 rounded-full bg-zinc-50 hover:bg-zinc-100 transition-colors text-zinc-400 hover:text-zinc-900 border border-zinc-100"
                     >
                       <ChevronRight size={24} />
                     </button>
@@ -378,24 +377,24 @@ export default function App() {
                     transition={{ duration: 0.3 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="mt-1 p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-                        <Activity size={20} />
+                    <div className="flex flex-col items-center text-center space-y-4">
+                      <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl">
+                        <Activity size={24} />
                       </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-zinc-900">{currentPhase.title}</h3>
-                        <p className="text-zinc-500 mt-1 leading-relaxed">{currentPhase.description}</p>
+                      <div className="max-w-lg">
+                        <h3 className="text-2xl font-bold text-zinc-900">{currentPhase.title}</h3>
+                        <p className="text-zinc-500 mt-2 leading-relaxed">{currentPhase.description}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-4">
+                      <div className="space-y-4 flex flex-col items-center text-center">
                         <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-2">
                           <Zap size={14} className="text-amber-500" /> Key Checkpoints
                         </h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-3 w-full max-w-xs mx-auto">
                           {currentPhase.keyPoints.map((point, i) => (
-                            <li key={i} className="flex items-start gap-3 text-sm text-zinc-700">
+                            <li key={i} className="flex items-start gap-3 text-sm text-zinc-700 text-left">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
                               {point}
                             </li>
@@ -403,15 +402,15 @@ export default function App() {
                         </ul>
                       </div>
 
-                      <div className="space-y-6">
-                        <div className="p-5 bg-zinc-50 rounded-2xl border border-zinc-100">
+                      <div className="space-y-4">
+                        <div className="p-5 bg-zinc-50 rounded-2xl border border-zinc-100 text-center flex flex-col items-center">
                           <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-2 flex items-center gap-2">
                             <Target size={14} className="text-emerald-600" /> Core Focus
                           </h4>
                           <p className="text-sm font-semibold text-zinc-900">{currentPhase.focus}</p>
                         </div>
 
-                        <div className="p-5 bg-rose-50 rounded-2xl border border-rose-100">
+                        <div className="p-5 bg-rose-50 rounded-2xl border border-rose-100 text-center flex flex-col items-center">
                           <h4 className="text-xs font-bold uppercase tracking-widest text-rose-400 mb-2 flex items-center gap-2">
                             <Info size={14} /> Common Fault
                           </h4>
